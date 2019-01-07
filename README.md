@@ -49,7 +49,7 @@ python -m unittest tests/test_waldo_image.py
 
 I've made the following assumptions:
 
-* two images can fit into memory
+* two images can fit into the memory of a Celery worker at the same time
 * if cropped image appears more than once, the "best" match is returned
 
 
@@ -57,6 +57,8 @@ I've made the following assumptions:
 
 Steve Rawlinson – srawlin@gmail.com
 
+Credit:
+Template Matching based on [OpenCV Tutorial](https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_imgproc/py_template_matching/py_template_matching.html)
 
 [https://github.com/srawlin](https://github.com/srawlin/)
 

@@ -7,7 +7,7 @@ from celery import group
 from waldo_worker.tasks import run_match
 
 # Assumptions:
-# - cropped image appears at most once in an image
+# - if cropped image appears more than once, the "best" match is returned
 # - two images can fit into memory
 
 if __name__ == "__main__":

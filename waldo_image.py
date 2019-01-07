@@ -9,12 +9,15 @@ from errno import ENOENT
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+# use DEBUG = True to display image and cropped area in matplotlib
 DEBUG = False
 
 
 class WaldoImage:
 
     def __init__(self, image_filename):
+        """Load the image using OpenCV. Check if it exists and is valid image"""
+
         if not os.path.isfile(image_filename):
             logger.error('File not found: {0}'.format(image_filename))
             raise IOError(ENOENT, 'File not found', image_filename)
@@ -27,6 +30,7 @@ class WaldoImage:
 
     @property
     def dimensions(self):
+        """ Returns image (width, height)"""
         return self.image.shape[::-1]
 
     def match(self, template, threshold=0.7, method=cv2.TM_CCOEFF_NORMED):
@@ -34,6 +38,9 @@ class WaldoImage:
         Possible methods for comparison
         ['cv2.TM_CCOEFF', 'cv2.TM_CCOEFF_NORMED', 'cv2.TM_CCORR',
          'cv2.TM_CCORR_NORMED', 'cv2.TM_SQDIFF', 'cv2.TM_SQDIFF_NORMED']
+
+        Based on OpenCV tutorial
+        https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_imgproc/py_template_matching/py_template_matching.html
         """
 
         template_w, template_h = template.dimensions
@@ -64,6 +71,7 @@ class WaldoImage:
         return top_left
 
     def plot_detection(self, res, top_left, width, height):
+        """Display image and cropped rectangle using matplotlib"""
 
         bottom_right = (top_left[0] + width, top_left[1] + height)
 
