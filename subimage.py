@@ -1,3 +1,17 @@
+#
+# Waldo Photos Engineering Project
+#
+# By Steve Rawlinson
+#
+# The application takes the location of two image files and returns
+# information if one of the images is a cropped part of the other one
+#
+#
+# Assumptions:
+# - if cropped image appears more than once, the "best" match is returned
+# - two images can fit into memory
+#
+
 import argparse
 import logging
 import os
@@ -6,9 +20,6 @@ import sys
 from celery import group
 from waldo_worker.tasks import run_match
 
-# Assumptions:
-# - if cropped image appears more than once, the "best" match is returned
-# - two images can fit into memory
 
 if __name__ == "__main__":
 
