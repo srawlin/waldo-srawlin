@@ -1,25 +1,32 @@
 # Waldo Photos Engineering Project
 > 
 
-One to two paragraph statement about your product and what it does.
+Demonstration application that finds cropped images.
 
 ## Installation
 
-The application is written in Python3.  For parallel processing it uses Celery with a RabbitMQ message broker.
+The application is written in Python 3.6.  For parallel processing it uses Celery with a RabbitMQ message broker.
 
 OS X & Linux:
 
 ```bash
-pip install pip install opencv-python celery matplotlib
+pip install opencv-python celery matplotlib
 ```
 
-## Start Celery Workers
+# Start Celery Workers
 
 In a seperate shell start the Celery workers.
 
 ```bash
 celery -A waldo_worker worker -l info
 ```
+
+# Install Broker
+
+Install and configure a broker, such as RabbitMQ.  [Celery RabbitMQ](http://docs.celeryproject.org/en/latest/getting-started/brokers/rabbitmq.html#broker-rabbitmq)
+
+Edit broker settings in `waldo_worker/celery.py`
+
 
 ## Usage example
 
@@ -29,6 +36,7 @@ Example:
 ```bash
 python subimage.py ./test-images/image1.jpg ./test-images/image1_cropped.jpg 
 ```
+
 
 
 ## Run Tests
