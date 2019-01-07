@@ -13,7 +13,7 @@ OS X & Linux:
 pip install opencv-python celery matplotlib
 ```
 
-# Start Celery Workers
+### Start Celery Workers
 
 In a seperate shell start the Celery workers.
 
@@ -21,7 +21,7 @@ In a seperate shell start the Celery workers.
 celery -A waldo_worker worker -l info
 ```
 
-# Install Broker
+### Install Broker
 
 Install and configure a broker, such as RabbitMQ.  [Celery RabbitMQ](http://docs.celeryproject.org/en/latest/getting-started/brokers/rabbitmq.html#broker-rabbitmq)
 
