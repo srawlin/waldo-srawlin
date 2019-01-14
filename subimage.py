@@ -15,8 +15,10 @@
 import argparse
 import os
 import sys
+import time
 
 from celery import group
+from celery.result import AsyncResult
 from waldo_worker.tasks import run_match
 
 
@@ -34,9 +36,27 @@ if __name__ == "__main__":
             sys.exit(1)
 
     # Celery worker to perform match
-    g = group(run_match.s(args.image1, args.image2),
-              run_match.s(args.image2, args.image1))
-    result = g().get()
+    g = group([run_match.s(args.image1, args.image2),
+              run_match.s(args.image2, args.image1)])
+
+    try:
+        job = g.apply_async()
+    except (IOError):
+        print("File not found")
+        sys.exit(1)
+    except (ValueError):
+        print("File is corrupt")
+        sys.exit(1)
+
+    # Wait for workers to complete
+    while not job.ready():
+        time.sleep(1)
+
+        if job.failed():
+            print('Run failed.')
+            sys.exit(1)     
+
+    result = job.get()
 
     if len(result) != 2:
         print('Run failed.  Expected 2 results from Celery worker but'
@@ -52,3 +72,4 @@ if __name__ == "__main__":
 
     if no_matches:
         print('No matches')
+

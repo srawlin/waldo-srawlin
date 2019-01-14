@@ -3,6 +3,7 @@ from celery import Celery
 
 app = Celery('waldo_worker',
              backend='rpc://',
+             result_backend = 'rpc://',
              broker='amqp://srawlin:narnia@localhost:5672/waldo',
              include=['waldo_worker.tasks'])
 
